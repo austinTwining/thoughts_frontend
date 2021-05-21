@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/thought.dart';
+import '../widgets/thought_card.dart';
 
 class ExplorePage extends StatefulWidget{
   @override
@@ -17,34 +17,16 @@ class ExploreState extends State<ExplorePage>{
 
   @override
   Widget build(BuildContext context) {
-    Thought t = Thought("Hello World", "me");
-    Thought h = Thought("Goodbye World", "you");
-    Thought o = Thought("Still Here", "you");
+    
     return Container(
-      child: Center(
-        child: Draggable(
-          child: _getThoughtCard(t),
-          feedback: _getThoughtCard(h),
-          childWhenDragging: Container(),
-        )
-      ),
+      padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 0.0),
+      child: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return ThoughtCard("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae lacinia massa. Sed consequat consequat volutpat. Sed arcu nulla, elementum quis aliquet in, euismod in turpis. Cras sed auctor lacus, vitae blandit nibh.", "-austin");
+      })
     );
   }
 
-  Widget _getThoughtCard(Thought thought) {
-    return Container(
-      margin: EdgeInsets.all(15.0),
-      width: 330,
-      height: 400,
-      child: Card(
-              elevation: 12,
-              color: Colors.white,
-              shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              child: Center(
-                child: Text(thought.thought),
-              ),
-            ),
-    );
-  }
+  
 }

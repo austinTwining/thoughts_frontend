@@ -1,21 +1,30 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:thoughts_frontend/pages/registration.dart';
 import 'package:thoughts_frontend/pages/home.dart';
+import 'package:thoughts_frontend/services/http_service.dart';
 
-class Login extends StatefulWidget{
+import 'package:http/http.dart' as http;
+
+class Login extends StatefulWidget {
   @override
   State createState() => new LoginState();
 }
 
-class LoginState extends State<Login>{
+class LoginState extends State<Login> {
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
 
-  String email;
-  String password;
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(() => setState(() {}));
+    _passwordController.addListener(() => setState(() {}));
+  }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
@@ -25,24 +34,21 @@ class LoginState extends State<Login>{
               padding: const EdgeInsets.all(5.0),
               child: TextField(
                 controller: _emailController,
-                onSubmitted: _emailSubmit,
                 decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32.0),
-                    borderSide: BorderSide(color: const Color(0xff9d00f5), width: 2.0)
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32.0),
-                    borderSide: BorderSide(color: const Color(0xff9d00f5), width: 2.0)
-                  ),
-                  labelText: 'email',
-                  labelStyle: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Quicksand',
-                    color: const Color(0xff9d00f5)
-                  ),
-                  contentPadding: EdgeInsets.all(12.0)
-                ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0),
+                        borderSide: BorderSide(
+                            color: const Color(0xff9d00f5), width: 2.0)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0),
+                        borderSide: BorderSide(
+                            color: const Color(0xff9d00f5), width: 2.0)),
+                    labelText: 'email',
+                    labelStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Quicksand',
+                        color: const Color(0xff9d00f5)),
+                    contentPadding: EdgeInsets.all(12.0)),
               ),
             ),
           ),
@@ -52,25 +58,22 @@ class LoginState extends State<Login>{
               padding: const EdgeInsets.all(5.0),
               child: TextField(
                 controller: _passwordController,
-                onSubmitted: _passwordSubmit,
                 obscureText: true,
                 decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32.0),
-                    borderSide: BorderSide(color: const Color(0xff9d00f5), width: 2.0)
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32.0),
-                    borderSide: BorderSide(color: const Color(0xff9d00f5), width: 2.0)
-                  ),
-                  labelText: 'password',
-                  labelStyle: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Quicksand',
-                    color: const Color(0xff9d00f5)
-                  ),
-                  contentPadding: EdgeInsets.all(12.0)
-                ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0),
+                        borderSide: BorderSide(
+                            color: const Color(0xff9d00f5), width: 2.0)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0),
+                        borderSide: BorderSide(
+                            color: const Color(0xff9d00f5), width: 2.0)),
+                    labelText: 'password',
+                    labelStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Quicksand',
+                        color: const Color(0xff9d00f5)),
+                    contentPadding: EdgeInsets.all(12.0)),
               ),
             ),
           ),
@@ -83,20 +86,34 @@ class LoginState extends State<Login>{
                   child: Padding(
                     padding: EdgeInsets.only(right: 2.5),
                     child: FlatButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                      onPressed: () async {
+                        //authenticate and navigate
+                        print(_emailController.text);
+                        print(_passwordController.text);
+
+                        http.Response res = await HttpService.login(
+                            _emailController.text, _passwordController.text);
+
+                        if (res.statusCode == 200)
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()));
+                        else {
+                          print(jsonDecode(res.body)['message']);
+                        }
                       },
                       color: const Color(0xff9d00f5),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32.0),
-                        side: BorderSide(color: const Color(0xff9d00f5), width: 2.0)
-                      ),
-                      child: Text('log in',
+                          borderRadius: BorderRadius.circular(32.0),
+                          side: BorderSide(
+                              color: const Color(0xff9d00f5), width: 2.0)),
+                      child: Text(
+                        'log in',
                         style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Quicksand',
-                          color: Colors.white
-                        ),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Quicksand',
+                            color: Colors.white),
                       ),
                     ),
                   ),
@@ -106,19 +123,22 @@ class LoginState extends State<Login>{
                     padding: EdgeInsets.only(left: 2.5),
                     child: FlatButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationPage()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegistrationPage()));
                       },
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32.0),
-                        side: BorderSide(color: const Color(0xff9d00f5), width: 2.0)
-                      ),
-                      child: Text('sign up',
+                          borderRadius: BorderRadius.circular(32.0),
+                          side: BorderSide(
+                              color: const Color(0xff9d00f5), width: 2.0)),
+                      child: Text(
+                        'sign up',
                         style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Quicksand',
-                          color: const Color(0xff9d00f5)
-                        ),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Quicksand',
+                            color: const Color(0xff9d00f5)),
                       ),
                     ),
                   ),
@@ -129,12 +149,5 @@ class LoginState extends State<Login>{
         ],
       ),
     );
-  }
-
-  void _emailSubmit(String text){
-    email = _emailController.text;
-  }
-  void _passwordSubmit(String text){
-    password = _passwordController.text;
   }
 }
