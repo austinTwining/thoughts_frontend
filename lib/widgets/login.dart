@@ -101,6 +101,8 @@ class LoginState extends State<Login> {
                                   builder: (context) => HomePage()));
                         else {
                           print(jsonDecode(res.body)['message']);
+                          _emailController.clear();
+                          _passwordController.clear();
                         }
                       },
                       color: const Color(0xff9d00f5),
