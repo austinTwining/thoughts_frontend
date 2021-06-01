@@ -4,9 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:thoughts_frontend/services/Thought.dart';
 
 //TODO: add Error handling
-
 class HttpService {
-  static final String url = "192.168.2.62:3000";
+  static final String url = "thoughts-beggeekboa-uc.a.run.app";
 
   static String cookie;
   static String name;
@@ -15,7 +14,7 @@ class HttpService {
   static Future<http.Response> login(String email, String password) async {
     Map<String, String> reqBody = {'email': email, 'password': password};
 
-    final response = await http.post(Uri.http(url, 'login'), body: reqBody);
+    final response = await http.post(Uri.https(url, 'login'), body: reqBody);
 
     Map resHeader = Map.fromEntries(response.headers.entries);
     Map resBody = jsonDecode(response.body);
@@ -37,7 +36,7 @@ class HttpService {
       'password': password
     };
 
-    final response = await http.post(Uri.http(url, 'register'), body: reqBody);
+    final response = await http.post(Uri.https(url, 'register'), body: reqBody);
 
     Map resHeader = Map.fromEntries(response.headers.entries);
     Map resBody = jsonDecode(response.body);
@@ -55,7 +54,7 @@ class HttpService {
     if (cookie != null) {
       Map<String, String> reqHeaders = {'cookie': cookie};
       final response =
-          await http.post(Uri.http(url, 'logout'), headers: reqHeaders);
+          await http.post(Uri.https(url, 'logout'), headers: reqHeaders);
 
       return response;
     }
@@ -79,7 +78,7 @@ class HttpService {
       Map<String, String> reqHeaders = {'cookie': cookie};
       Map<String, String> reqBody = {'id': uid};
 
-      final response = await http.post(Uri.http(url, 'show/user'),
+      final response = await http.post(Uri.https(url, 'show/user'),
           body: reqBody, headers: reqHeaders);
       //print(response.body);
       return parsePosts(response.body);
@@ -97,7 +96,7 @@ class HttpService {
       Map<String, String> reqHeaders = {'cookie': cookie};
       Map<String, String> reqBody = {'content': content};
 
-      final response = await http.post(Uri.http(url, 'post'),
+      final response = await http.post(Uri.https(url, 'post'),
           body: reqBody, headers: reqHeaders);
 
       return response;
