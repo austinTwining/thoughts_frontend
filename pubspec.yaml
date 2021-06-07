@@ -57,18 +57,23 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Jaldi
+    - family: Lato
       fonts:
-        - asset: fonts/Jaldi/Jaldi-Regular.ttf
-        - asset: fonts/Jaldi/Jaldi-Bold.ttf
-          style: normal
-    - family: Quicksand
-      fonts:
-        - asset: fonts/Quicksand/Quicksand-Regular.ttf
-        - asset: fonts/Quicksand/Quicksand-Medium.ttf
-        - asset: fonts/Quicksand/Quicksand-Light.ttf
-        - asset: fonts/Quicksand/Quicksand-Bold.ttf
-          style: normal
+        - asset: fonts/Lato/Lato-Black.ttf
+        - asset: fonts/Lato/Lato-BlackItalic.ttf
+          style: italic
+        - asset: fonts/Lato/Lato-Bold.ttf
+        - asset: fonts/Lato/Lato-BoldItalic.ttf
+          style: italic
+        - asset: fonts/Lato/Lato-Hairline.ttf
+        - asset: fonts/Lato/Lato-HairlineItalic.ttf
+          style: italic
+        - asset: fonts/Lato/Lato-Italic.ttf
+          style: italic
+        - asset: fonts/Lato/Lato-Light.ttf
+        - asset: fonts/Lato/Lato-LightItalic.ttf
+          style: italic
+        - asset: fonts/Lato/Lato-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -1,27 +1,26 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'package:thoughts_frontend/pages/registration.dart';
 import 'package:thoughts_frontend/services/http_service.dart';
 import 'package:thoughts_frontend/widgets/logo.dart';
 
-import 'dart:convert';
+import 'home.dart';
+
 import 'package:http/http.dart' as http;
 
-import 'home.dart';
-import 'login.dart';
-
-class RegistrationPage extends StatefulWidget {
-  @override
-  RegistrationPageState createState() => RegistrationPageState();
+class LoginPage extends StatefulWidget {
+  LoginPageState createState() => LoginPageState();
 }
 
-class RegistrationPageState extends State<RegistrationPage> {
-  final TextEditingController _nameController = new TextEditingController();
+class LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _nameController.addListener(() => setState(() {}));
     _emailController.addListener(() => setState(() {}));
     _passwordController.addListener(() => setState(() {}));
   }
@@ -50,58 +49,38 @@ class RegistrationPageState extends State<RegistrationPage> {
           children: [
             //logo
             Expanded(
-              flex: 3,
+              flex: 5,
               child: Logo(),
             ),
+
             //registration form card
             Expanded(
-                flex: 5,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(25))),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 30),
-                      //name field
-                      _buildNameField(),
-                      SizedBox(height: 30),
-                      //email field
-                      _buildEmailField(),
-                      SizedBox(height: 30),
-                      //password field
-                      _buildPasswordField(),
-                      SizedBox(height: 30),
-                      //sign up button
-                      _buildSignupButton(),
+              flex: 5,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(25))),
+                child: Column(
+                  children: [
+                    SizedBox(height: 30),
+                    //email field
+                    _buildEmailField(),
+                    SizedBox(height: 30),
+                    //password field
+                    _buildPasswordField(),
+                    SizedBox(height: 30),
+                    //sign up button
+                    _buildLoginButton(),
 
-                      //login question
-                      _buildLoginQuestion(),
-                      SizedBox(height: 30)
-                    ],
-                  ),
-                )),
+                    //login question
+                    _buildSignupQuestion(),
+                    SizedBox(height: 30)
+                  ],
+                ),
+              ),
+            ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNameField() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-        child: Material(
-          child: TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color(0xffFAF4FE),
-                  border: InputBorder.none,
-                  labelText: "name",
-                  labelStyle: TextStyle(color: Color(0xffD6A8EC)))),
         ),
       ),
     );
@@ -146,7 +125,7 @@ class RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Widget _buildSignupButton() {
+  Widget _buildLoginButton() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: 25),
       child: Row(
@@ -161,7 +140,7 @@ class RegistrationPageState extends State<RegistrationPage> {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
-                "sign up",
+                "log in",
                 style: TextStyle(
                     fontFamily: "Lato",
                     fontSize: 18.0,
@@ -169,20 +148,21 @@ class RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             onPressed: () async {
-              print(_nameController.text);
+              //LOG IN
+              //authenticate and navigate
               print(_emailController.text);
               print(_passwordController.text);
 
-              http.Response res = await HttpService.register(
-                  _nameController.text,
-                  _emailController.text,
-                  _passwordController.text);
+              http.Response res = await HttpService.login(
+                  _emailController.text, _passwordController.text);
 
               if (res.statusCode == 200)
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => HomePage()));
               else {
                 print(jsonDecode(res.body)['message']);
+                _emailController.clear();
+                _passwordController.clear();
               }
             },
           ))
@@ -191,26 +171,26 @@ class RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Widget _buildLoginQuestion() {
+  Widget _buildSignupQuestion() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Already have an account?",
+        Text("Don't have an account?",
             style: TextStyle(
                 decoration: TextDecoration.none,
                 color: Color(0xA6D6A8EC),
                 fontFamily: 'Lato',
                 fontSize: 12)),
         TextButton(
-          child: Text("Log in",
+          child: Text("Sign up",
               style: TextStyle(
                   decoration: TextDecoration.none,
                   color: Color(0xffBC77DC),
                   fontFamily: 'Lato',
                   fontSize: 12)),
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => LoginPage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => RegistrationPage()));
           },
         )
       ],
