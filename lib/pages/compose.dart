@@ -19,59 +19,63 @@ class ComposePageState extends State<ComposePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //Background Gradient
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.5, 1.0],
-          colors: <Color>[Color(0xffbf80ff), Color(0xff8b06ba)],
-          tileMode: TileMode.clamp,
-        ),
-      ),
-
-      //content
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(height: 30),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(15),
-                child: Text(
-                  "Compose",
-                  style: TextStyle(
-                      decoration: TextDecoration.none,
-                      color: Colors.white,
-                      fontFamily: "Lato",
-                      fontSize: 36,
-                      fontWeight: FontWeight.w900),
-                ),
-              ),
-            ],
+        //Background Gradient
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.5, 1.0],
+            colors: <Color>[Color(0xffbf80ff), Color(0xff8b06ba)],
+            tileMode: TileMode.clamp,
           ),
-          //background card
-          Expanded(
-              child: ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-            child: Container(
-              color: Colors.white,
-              child: Column(
+        ),
+
+        //content
+        child: InkWell(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: 30),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 30),
-                  _buildComposeField(),
-                  Spacer(),
-                  _buildSendButton(),
-                  SizedBox(height: 145)
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      "Compose",
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          color: Colors.white,
+                          fontFamily: "Lato",
+                          fontSize: 36,
+                          fontWeight: FontWeight.w900),
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ))
-        ],
-      ),
-    );
+              //background card
+              Expanded(
+                  child: ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 30),
+                      _buildComposeField(),
+                      Spacer(),
+                      _buildSendButton(),
+                      SizedBox(height: 145)
+                    ],
+                  ),
+                ),
+              ))
+            ],
+          ),
+        ));
   }
 
   Widget _buildComposeField() {

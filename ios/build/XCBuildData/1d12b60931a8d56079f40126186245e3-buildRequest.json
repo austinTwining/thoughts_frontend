@@ -1,11 +1,11 @@
 {
-  "buildCommand" : "build",
+  "buildCommand" : "prepareForIndexing",
   "configuredTargets" : [
     {
       "guid" : "2cb6a99b6d3cedde849dabb19eb3be1088a783a885d8b0b3beb2e9f90bde3f49"
     }
   ],
-  "continueBuildingAfterErrors" : false,
+  "continueBuildingAfterErrors" : true,
   "enableIndexBuildArena" : false,
   "hideShellScriptEnvironment" : false,
   "parameters" : {
