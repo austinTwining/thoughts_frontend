@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:thoughts_frontend/pages/landing.dart';
 
 import 'package:thoughts_frontend/pages/registration.dart';
 import 'package:thoughts_frontend/services/http_service.dart';
@@ -17,6 +18,8 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
+
+  String errorMessage = '';
 
   @override
   void initState() {
@@ -64,7 +67,16 @@ class LoginPageState extends State<LoginPage> {
                         BorderRadius.vertical(top: Radius.circular(25))),
                 child: Column(
                   children: [
-                    SizedBox(height: 30),
+                    SizedBox(height: 10),
+                    Text(
+                      errorMessage,
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontFamily: "Lato",
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(height: 10),
                     //email field
                     _buildEmailField(),
                     SizedBox(height: 30),
@@ -157,10 +169,16 @@ class LoginPageState extends State<LoginPage> {
                   _emailController.text, _passwordController.text);
 
               if (res.statusCode == 200)
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                        fullscreenDialog: true));
               else {
                 print(jsonDecode(res.body)['message']);
+                setState(() {
+                  errorMessage = jsonDecode(res.body)['message'];
+                });
                 _emailController.clear();
                 _passwordController.clear();
               }

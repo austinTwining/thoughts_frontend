@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:thoughts_frontend/services/Thought.dart';
 
-//TODO: add Error handling
 class HttpService {
   static final String url = "thoughts-beggeekboa-uc.a.run.app";
 
@@ -51,39 +50,29 @@ class HttpService {
   }
 
   static Future<http.Response> logout() async {
-    if (cookie != null) {
-      Map<String, String> reqHeaders = {'cookie': cookie};
-      final response =
-          await http.post(Uri.https(url, 'logout'), headers: reqHeaders);
+    Map<String, String> reqHeaders = {'cookie': cookie};
+    final response =
+        await http.post(Uri.https(url, 'logout'), headers: reqHeaders);
 
-      return response;
-    }
-    return null;
+    return response;
   }
 
   static Future<List<Thought>> getAllPosts() async {
-    if (cookie != null) {
-      Map<String, String> reqHeaders = {'cookie': cookie};
+    Map<String, String> reqHeaders = {'cookie': cookie};
 
-      final response =
-          await http.get(Uri.http(url, 'show'), headers: reqHeaders);
-      //print(response.body);
-      return parsePosts(response.body);
-    }
-    return null;
+    final response = await http.get(Uri.http(url, 'show'), headers: reqHeaders);
+    //print(response.body);
+    return parsePosts(response.body);
   }
 
   static Future<List<Thought>> getUserPosts(String uid) async {
-    if (cookie != null) {
-      Map<String, String> reqHeaders = {'cookie': cookie};
-      Map<String, String> reqBody = {'id': uid};
+    Map<String, String> reqHeaders = {'cookie': cookie};
+    Map<String, String> reqBody = {'id': uid};
 
-      final response = await http.post(Uri.https(url, 'show/user'),
-          body: reqBody, headers: reqHeaders);
-      //print(response.body);
-      return parsePosts(response.body);
-    }
-    return null;
+    final response = await http.post(Uri.https(url, 'show/user'),
+        body: reqBody, headers: reqHeaders);
+    //print(response.body);
+    return parsePosts(response.body);
   }
 
   static List<Thought> parsePosts(String body) {
@@ -92,15 +81,12 @@ class HttpService {
   }
 
   static Future<http.Response> sendPost(String content) async {
-    if (cookie != null) {
-      Map<String, String> reqHeaders = {'cookie': cookie};
-      Map<String, String> reqBody = {'content': content};
+    Map<String, String> reqHeaders = {'cookie': cookie};
+    Map<String, String> reqBody = {'content': content};
 
-      final response = await http.post(Uri.https(url, 'post'),
-          body: reqBody, headers: reqHeaders);
+    final response = await http.post(Uri.https(url, 'post'),
+        body: reqBody, headers: reqHeaders);
 
-      return response;
-    }
-    return null;
+    return response;
   }
 }

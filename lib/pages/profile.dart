@@ -97,8 +97,11 @@ class ProfileState extends State<ProfilePage> {
               http.Response res = await HttpService.logout();
 
               if (res.statusCode == 200)
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LandingPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LandingPage(),
+                        fullscreenDialog: true));
               else {
                 print(jsonDecode(res.body)['message']);
               }

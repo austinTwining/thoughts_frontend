@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'home.dart';
+import 'landing.dart';
 import 'login.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -17,6 +18,8 @@ class RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _nameController = new TextEditingController();
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
+
+  String errorMessage = '';
 
   @override
   void initState() {
@@ -64,7 +67,16 @@ class RegistrationPageState extends State<RegistrationPage> {
                             BorderRadius.vertical(top: Radius.circular(25))),
                     child: Column(
                       children: [
-                        SizedBox(height: 30),
+                        SizedBox(height: 10),
+                        Text(
+                          errorMessage,
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontFamily: "Lato",
+                              fontSize: 10.0,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(height: 10),
                         //name field
                         _buildNameField(),
                         SizedBox(height: 30),
@@ -181,10 +193,18 @@ class RegistrationPageState extends State<RegistrationPage> {
                   _passwordController.text);
 
               if (res.statusCode == 200)
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                        fullscreenDialog: true));
               else {
                 print(jsonDecode(res.body)['message']);
+                setState(() {
+                  errorMessage = jsonDecode(res.body)['message'];
+                });
+                _emailController.clear();
+                _passwordController.clear();
               }
             },
           ))

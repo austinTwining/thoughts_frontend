@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:thoughts_frontend/services/http_service.dart';
 
+import 'landing.dart';
+
 class ComposePage extends StatefulWidget {
   ComposePageState createState() => ComposePageState();
 }
@@ -13,8 +15,6 @@ class ComposePageState extends State<ComposePage> {
     super.initState();
     _thoughtController.addListener(() => setState(() {}));
   }
-
-  //TODO: fix keyboard bug not being able to get rid of keyboard
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +121,7 @@ class ComposePageState extends State<ComposePage> {
             ),
             onPressed: () async {
               final res = await HttpService.sendPost(_thoughtController.text);
+              print(res.statusCode.toString() + " | " + res.body.toString());
               if (res.statusCode == 200) _thoughtController.clear();
             },
           ))
