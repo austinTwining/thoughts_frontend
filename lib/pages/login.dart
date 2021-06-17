@@ -27,7 +27,8 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Scaffold(
+        body: SingleChildScrollView(
       child: Container(
         constraints: BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height,
@@ -53,7 +54,7 @@ class LoginPageState extends State<LoginPage> {
               child: Logo(),
             ),
 
-            //registration form card
+            //login form card
             Expanded(
               flex: 5,
               child: Container(
@@ -69,7 +70,6 @@ class LoginPageState extends State<LoginPage> {
                     SizedBox(height: 30),
                     //password field
                     _buildPasswordField(),
-                    SizedBox(height: 30),
                     //sign up button
                     _buildLoginButton(),
 
@@ -83,7 +83,7 @@ class LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   Widget _buildEmailField() {

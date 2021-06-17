@@ -28,61 +28,63 @@ class RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height,
-            maxWidth: MediaQuery.of(context).size.width),
-        //Background Gradient
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.5, 1.0],
-            colors: <Color>[Color(0xffbf80ff), Color(0xff8b06ba)],
-            tileMode: TileMode.clamp,
-          ),
-        ),
-
-        //content
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            //logo
-            Expanded(
-              flex: 3,
-              child: Logo(),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height,
+              maxWidth: MediaQuery.of(context).size.width),
+          //Background Gradient
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.5, 1.0],
+              colors: <Color>[Color(0xffbf80ff), Color(0xff8b06ba)],
+              tileMode: TileMode.clamp,
             ),
-            //registration form card
-            Expanded(
-                flex: 5,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(25))),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 30),
-                      //name field
-                      _buildNameField(),
-                      SizedBox(height: 30),
-                      //email field
-                      _buildEmailField(),
-                      SizedBox(height: 30),
-                      //password field
-                      _buildPasswordField(),
-                      SizedBox(height: 30),
-                      //sign up button
-                      _buildSignupButton(),
+          ),
 
-                      //login question
-                      _buildLoginQuestion(),
-                      SizedBox(height: 30)
-                    ],
-                  ),
-                )),
-          ],
+          //content
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              //logo
+              Expanded(
+                flex: 3,
+                child: Logo(),
+              ),
+              //registration form card
+              Expanded(
+                  flex: 5,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(25))),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 30),
+                        //name field
+                        _buildNameField(),
+                        SizedBox(height: 30),
+                        //email field
+                        _buildEmailField(),
+                        SizedBox(height: 30),
+                        //password field
+                        _buildPasswordField(),
+
+                        //sign up button
+                        _buildSignupButton(),
+
+                        //login question
+                        _buildLoginQuestion(),
+                        SizedBox(height: 30)
+                      ],
+                    ),
+                  )),
+            ],
+          ),
         ),
       ),
     );
